@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+  db:
+      image: postgres
+      restart: always
+      volumes:
+        - postgres-data:/data
+      environment:
+        POSTGRES_DB: ${DB_NAME}
+        POSTGRES_USER: ${DB_USER}
+        POSTGRES_PASSWORD: ${DB_PASSWORD}
+      networks:
+        - app-connect
+      ports:
+        - ${DB_PORT}:5432
+
+  nodejs:
+    build:
+      dockerfile: server/Dockerfile
+      context: ./
+      target: development
+    image: nodejs
+    container_name: nodejs
+    restart: on-failure
+    volumes:
+      - .:/usr/src/api
+    depends_on:
+      - db
+    networks:
+      - app-connect
+    ports:
+      - ${PORT}:3000
+    env_file: .env
+    environment:
+      - NODE_ENV=development
+
+volumes:
+  postgres-data:
+
+networks:
+  app-connect:
+    driver: bridge
