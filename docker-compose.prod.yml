@@ -19,7 +19,7 @@ services:
     build:
       context: ./api
       dockerfile: Dockerfile
-      target: development
+      target: production
     volumes:
       - ./api/src:/api/src
       - ./api/node_modules:/api/node_modules
@@ -32,12 +32,12 @@ services:
       - ${API_PORT}:3000
     env_file: .env
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=production
 
   web:
     build:
       context: ./web
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
     networks:
       - webapp
     ports:
@@ -46,26 +46,8 @@ services:
     container_name: web
     env_file:
       - .env
-    volumes:
-      - ./web/node_modules:/app/node_modules
-      - ./web/src:/app/src
-      - ./web/public:/app/public
-    stdin_open: true
     environment:
-      - REACT_APP_NODE_ENV=development
-
-  dbadmin:
-    image: dpage/pgadmin4
-    restart: always
-    ports:
-      - 5050:80
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: pgadmin4
-    depends_on:
-      - db
-    networks:
-      - db-connect
+      - REACT_APP_NODE_ENV=production
 
 volumes:
   postgres-data:
