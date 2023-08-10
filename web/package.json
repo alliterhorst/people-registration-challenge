@@ -15,10 +15,10 @@
     "@hookform/resolvers": "^3.2.0",
     "@mui/material": "^5.14.4",
     "axios": "^1.4.0",
-    "joi": "^17.9.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.45.4",
+    "validator-brazil": "^1.2.2",
     "yup": "^1.2.0"
   },
   "devDependencies": {
