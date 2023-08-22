@@ -8,7 +8,7 @@ Stored fields:
 - comments
 - preferred color (among available colors in a rainbow, this may change later)
 
-Mandatory Technologies: Porstgres, Typescript, Node.js, React and Docker
+Mandatory Technologies: Postgres, Typescript, Node.js, React and Docker
 
 ## Prerequisites
 

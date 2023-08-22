@@ -23,6 +23,7 @@ import { ICreatePerson } from '../interface/create-person.interface';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { isCpf } from 'validator-brazil';
+import { AxiosError } from 'axios';
 
 const schema = yup.object().shape({
   name: yup.string().required('O nome é obrigatório'),
@@ -113,7 +114,11 @@ function PersonComponent() {
         reset();
       } catch (error) {
         console.log(error);
-        setErrorMessage(error?.response?.data?.message || error?.message);
+        if (error instanceof AxiosError) {
+          setErrorMessage(error?.response?.data?.message || error?.message);
+        } else if (error instanceof Error) {
+          setErrorMessage(error?.message);
+        }
         setCreatePersonStatus(FetchStatusEnum.FAILURE);
       }
     },
